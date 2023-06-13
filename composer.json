@@ -1,0 +1,22 @@
+{
+    "name": "belsmol/module-videocall",
+    "description": "Magento 2 Video Call Extension",
+    "require": {
+        "php": ">=7.4",
+        "magento/framework": "*",
+        "cboden/ratchet": "^0.4.3"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "GPL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "BelSmol\\VideoCall\\": ""
+        }
+    }
+}

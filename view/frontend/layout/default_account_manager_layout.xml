@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<!--
+    Default Layout For Manager Account
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="manager-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="manager-2columns-left"/>
+    <body>
+        <referenceContainer name="manager.after.body.start">
+            <!--Include magento libraries like validators, cookie and so on-->
+            <block class="Magento\RequireJs\Block\Html\Head\Config"
+                   name="requirejs-config"
+            />
+            <block class="Magento\Framework\View\Element\Js\Cookie" name="js_cookies" template="Magento_Theme::js/cookie.phtml">
+    		<arguments>
+        		<argument name="session_config" xsi:type="object">Magento\Theme\ViewModel\Block\SessionConfig</argument>
+    		</arguments>
+	    </block>
+            <block class="Magento\Theme\Block\Html\Notices"
+                   name="global_notices"
+                   template="Magento_Theme::html/notices.phtml"
+            />
+            <!--END: Include magento libraries-->
+        </referenceContainer>
+
+        <referenceContainer name="manager.header.container">
+            <container name="manager.panel.wrapper" as="manager.panel.wrapper" htmlTag="div" htmlClass="panel wrapper">
+                <container name="manager.panel.header" as="manager.panel.header" htmlTag="div" htmlClass="panel header">
+                    <!-- Display Manager Account Header Top Menu-->
+                    <block name="manager.top.links"
+                           cacheable="false"
+                           template="BelSmol_VideoCall::manager/account_top_menu.phtml"
+                    >
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">BelSmol\VideoCall\ViewModel\ManagerTopLinksViewModel</argument>
+                        </arguments>
+                    </block>
+                </container>
+            </container>
+        </referenceContainer>
+
+        <referenceContainer name="manager.main">
+            <!--  Show page title -->
+            <block class="Magento\Theme\Block\Html\Title"
+                   name="page.main.title"
+                   template="Magento_Theme::html/title.phtml"
+            />
+
+            <!--  Display session messages -->
+            <container name="page.messages" htmlTag="div" htmlClass="page messages">
+                <block class="Magento\Framework\View\Element\Template"
+                       name="ajax.message.placeholder"
+                       template="Magento_Theme::html/messages.phtml"
+                />
+                <block class="Magento\Framework\View\Element\Messages"
+                       name="messages" as="messages"
+                       template="Magento_Theme::messages.phtml"
+                />
+            </container>
+        </referenceContainer>
+
+        <!-- START: SIDEBAR AREA-->
+        <referenceContainer name="manager.sidebar.main">
+            <!-- Display Manager Account Side Bar Menu-->
+            <block name="manager.sidebar.main.account_nav" template="Magento_Theme::html/collapsible.phtml" before="-">
+                <arguments>
+                    <argument name="block_css" xsi:type="string">block-collapsible-nav</argument>
+                </arguments>
+                <!--  Manager account navigation sidebar -->
+                <block class="BelSmol\VideoCall\Block\Manager\Account\Navigation"
+                       name="manager_account_navigation" before="-"
+                >
+                    <arguments>
+                        <argument name="css_class" xsi:type="string">nav items</argument>
+                    </arguments>
+                    <!-- Add dashboard link -->
+                    <block class="Magento\Customer\Block\Account\SortLinkInterface"
+                           name="manager-dashboard-account-link"
+                    >
+                        <arguments>
+                            <argument name="label" xsi:type="string" translate="true">Dashboard</argument>
+                            <argument name="path" xsi:type="string">videocall/manager/dashboard</argument>
+                            <argument name="sortOrder" xsi:type="number">250</argument>
+                        </arguments>
+                    </block>
+                    <!-- Add Call History link -->
+                    <block class="Magento\Customer\Block\Account\SortLinkInterface" name="manager-history-account-link">
+                        <arguments>
+                            <argument name="label" xsi:type="string" translate="true">Call History</argument>
+                            <argument name="path" xsi:type="string">videocall/manager/history</argument>
+                            <argument name="sortOrder" xsi:type="number">250</argument>
+                        </arguments>
+                    </block>
+                    <!--Added delimiter to the account menu -->
+                    <block class="Magento\Customer\Block\Account\Delimiter"
+                           name="delimiter-1"
+                           before="manager-account-settings"
+                           template="Magento_Customer::account/navigation-delimiter.phtml"
+                    >
+                        <arguments>
+                            <argument name="sortOrder" xsi:type="number">250</argument>
+                        </arguments>
+                    </block>
+                    <!-- Add Account Settings link -->
+                    <block class="Magento\Customer\Block\Account\SortLinkInterface"
+                           after="-"
+                           name="manager-account-settings"
+                    >
+                        <arguments>
+                            <argument name="label" xsi:type="string" translate="true">Settings</argument>
+                            <argument name="path" xsi:type="string">videocall/manager/settings</argument>
+                            <argument name="sortOrder" xsi:type="number">250</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+        <!-- END: SIDEBAR AREA-->
+    </body>
+</page>

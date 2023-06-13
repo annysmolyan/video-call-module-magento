@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<!--
+    Manager Account Layout
+-->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
+    <head>
+        <title>My Account</title>
+        <css src="BelSmol_VideoCall::css/module.css" />
+    </head>
+    <update handle="empty"/>
+    <container name="root" htmlTag="div" htmlClass="page-wrapper">
+        <container name="manager.after.body.start" as="manager.after.body.start" before="-" label="Manager Page Top"/>
+        <container name="manager.global.notices" as="manager.global_notices" before="-"/>
+        <container name="manager.header.container" as="manager.header.container" label="Manager Page Header Container" before="-" htmlTag="header" htmlClass="page-header"/>
+        <container name="manager.page.top" as="manager.page_top" label="After Page Header"/>
+        <container name="manager.main.content" htmlTag="main" htmlId="maincontent" htmlClass="page-main">
+            <container name="manager.columns.top" label="Before Main Columns" before="manager.columns"/>
+            <container name="manager.columns" htmlTag="div" htmlClass="columns">
+                <container name="manager.main" label="Main Content Container" htmlTag="div" htmlClass="column main"/>
+                <container name="manager.div.sidebar.main" htmlTag="div" htmlClass="sidebar sidebar-main">
+                    <container name="manager.sidebar.main" as="manager.sidebar_main" label="Sidebar Main"/>
+                </container>
+            </container>
+        </container>
+        <container name="manager.page.bottom.container" as="manager.page_bottom_container" label="Before Page Footer Container" after="manager.main.content" htmlTag="div" htmlClass="page-bottom"/>
+        <container name="manager.footer-container" as="manager.footer" label="Page Footer Container" htmlTag="footer" htmlClass="page-footer"/>
+        <container name="manager.before.body.end" as="manager.before_body_end" after="-" label="Page Bottom"/>
+    </container>
+</layout>

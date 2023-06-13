@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="BelSmol_VideoCall::menu" title="VideoCall Module" sortOrder="10" >
+                    <resource id="BelSmol_VideoCall::config" title="Config" sortOrder="10" />
+                    <resource id="BelSmol_VideoCall::manager" title="Manager" sortOrder="10" >
+                        <resource id="BelSmol_VideoCall::managerCreate" title="Manager Create" sortOrder="50" />
+                        <resource id="BelSmol_VideoCall::managerDelete" title="Manager Delete" sortOrder="100" />
+                        <resource id="BelSmol_VideoCall::managerView" title="Manager View" sortOrder="150" />
+                        <resource id="BelSmol_VideoCall::managerEdit" title="Manager Edit" sortOrder="150" />
+                    </resource>
+                    <resource id="BelSmol_VideoCall::managerRoles" title="Manager Roles" sortOrder="10" >
+                        <resource id="BelSmol_VideoCall::managerRolesCreate" title="Manager Roles Create" sortOrder="50" />
+                        <resource id="BelSmol_VideoCall::managerRolesDelete" title="Manager Roles Delete" sortOrder="100" />
+                        <resource id="BelSmol_VideoCall::managerRolesView" title="Manager Roles View" sortOrder="150" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

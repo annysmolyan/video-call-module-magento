@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var CustomerCheckMediaViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\CustomerCheckMediaViewModel;
+use Magento\Framework\View\Element\Template;
+
+$viewModel = $block->getViewModel();
+?>
+
+<div class="warning-msg">
+    <p>
+        <?= __(
+            "If you have any difficulties with the video call, please, contact us %1%2%3",
+            '<a href="mailto:' . /* @escapeNotVerified */ $viewModel->getSupportEmail() . '">',
+            /* @escapeNotVerified */ $viewModel->getSupportEmail(),
+            '</a>'
+        )?>
+    </p>
+</div>
+
+<div class="video-wrapper" id="userMedia" data-bind="scope:'userMedia'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "#userMedia": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "userMedia": {
+                        "component": "BelSmol_VideoCall/js/components/userMedia",
+                        "customerId": <?= /* @escapeNotVerified */ $viewModel->getCustomerId(); ?>
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</div>
+
+<script>
+    require.config({
+        paths: {
+            webrtcAdapter: '<?= /* @escapeNotVerified */ $viewModel->getWebrtcAdapter(); ?>' //MUST BE removed ".js" !!!
+        }
+    });
+</script>

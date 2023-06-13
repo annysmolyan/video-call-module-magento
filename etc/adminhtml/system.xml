@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="belsmol" translate="label" sortOrder="350">
+            <label>BelSmol</label>
+        </tab>
+        <section id="videocall" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Video Call</label>
+            <tab>belsmol</tab>
+            <resource>BelSmol_VideoCall::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="version" translate="label" type="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Extension Version</label>
+                    <backend_model>BelSmol\VideoCall\Model\Config\Version</backend_model>
+                </field>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="security" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Security Settings</label>
+                <field id="session_lifetime" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Manager Session Lifetime (seconds)</label>
+                    <comment>Please enter at least 60 and at most 31536000 (one year).</comment>
+                    <validate>validate-digits validate-digits-range digits-range-60-31536000</validate>
+                </field>
+                <depends>
+                    <field id="videocall/general/enabled">1</field>
+                </depends>
+            </group>
+            <group id="webrtc" translate="label comment" type="text" sortOrder="100" showInDefault="1">
+                <label>WebRTC Settings</label>
+                <field id="adapter" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Webrtc Adapter Url</label>
+                    <validate>validate-no-empty</validate>
+                    <comment>WARNING! Don't put extension. It must be https://my-path-to-js instead of https://my-path-to-js.js. Don't put ".js"</comment>
+                </field>
+                <field id="signaling_server_host" translate="label" type="text" sortOrder="10" showInDefault="1">
+                    <label>Signaling Server Host</label>
+                    <validate>validate-no-empty</validate>
+                    <comment>Use ws for http and wss for https protocol. Example: ws://10.10.3.5 or wss://10.10.3.5</comment>
+                </field>
+                <field id="signaling_server_port" translate="label" type="text" sortOrder="10" showInDefault="1">
+                    <label>Signaling Server Port</label>
+                    <validate>validate-no-empty</validate>
+                    <comment>Example: 8080</comment>
+                </field>
+                <field id="check_by_cron" translate="label" type="select" sortOrder="10" showInDefault="1">
+                    <label>Check Signaling By Cron</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Check that signaling server is started and run server if not.</comment>
+                </field>
+                <field id="signaling_schedule" translate="label" type="text" sortOrder="90" showInDefault="1" canRestore="1">
+                    <label>Cron Schedule</label>
+                    <comment>Cron starts every 5 min by default.</comment>
+                    <depends>
+                        <field id="check_by_cron">1</field>
+                    </depends>
+                </field>
+                <depends>
+                    <field id="videocall/general/enabled">1</field>
+                </depends>
+            </group>
+            <group id="server" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Stun/Turn Settings (Ice Servers) </label>
+                <field id="ice_servers" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <validate>validate-no-empty</validate>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <frontend_model>BelSmol\VideoCall\Block\Adminhtml\System\Config\Form\ServerAddresses</frontend_model>
+                    <comment>eg. turn:10.10.4.5:3485, or stun:10.10.4.5:5555, or turn:server_host.com. Leave Username and Credential field empty if no auth needed</comment>
+                </field>
+                <depends>
+                    <field id="videocall/general/enabled">1</field>
+                </depends>
+            </group>
+            <group id="email" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Email Settings</label>
+                <field id="email_from" translate="label" type="text" sortOrder="10" showInDefault="1" canRestore="1">
+                    <label>Email From</label>
+                    <validate>validate-no-empty</validate>
+                    <comment>This email will be used as an email sender for sending generated password to a manager</comment>
+                </field>
+                <field id="name_from" translate="label" type="text" sortOrder="10" showInDefault="1" canRestore="1">
+                    <label>Name From</label>
+                    <validate>validate-no-empty</validate>
+                    <comment>This name will be used as an email sender name</comment>
+                </field>
+                <depends>
+                    <field id="videocall/general/enabled">1</field>
+                </depends>
+            </group>
+            <group id="customer_account" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer Account Settings</label>
+                <field id="support_email" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Support Email</label>
+                    <validate>validate-no-empty validate-email</validate>
+                    <comment>Where to send user's issues. This email will be used by users in case of call problems</comment>
+                </field>
+                <depends>
+                    <field id="videocall/general/enabled">1</field>
+                </depends>
+            </group>
+        </section>
+    </system>
+</config>

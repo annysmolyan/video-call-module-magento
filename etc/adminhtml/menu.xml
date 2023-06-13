@@ -1,0 +1,47 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Backend/etc/menu.xsd">
+    <!--
+    /**
+     * Copyright (c) 2023 by https://github.com/annysmolyan
+     *
+     * This module provides video call functionality for an e-commerce store.
+     * For license details, please view the GNU General Public License v3 (GPL 3.0)
+     * https://www.gnu.org/licenses/gpl-3.0.en.html
+     */
+    -->
+    <menu>
+        <add id="BelSmol_VideoCall::menu"
+             title="VideoCall"
+             translate="title"
+             module="BelSmol_VideoCall"
+             sortOrder="10"
+             resource="BelSmol_VideoCall::menu"
+             dependsOnModule="BelSmol_VideoCall" />
+
+        <add id="BelSmol_VideoCall::menu_manager"
+             title="Manager"
+             translate="title"
+             module="BelSmol_VideoCall"
+             sortOrder="10"
+             parent="BelSmol_VideoCall::menu"
+             resource="BelSmol_VideoCall::manager"/>
+
+        <add id="BelSmol_VideoCall::menu_manager_index"
+             title="All Managers"
+             translate="title"
+             module="BelSmol_VideoCall"
+             sortOrder="10"
+             parent="BelSmol_VideoCall::menu_manager"
+             resource="BelSmol_VideoCall::manager"
+             action="belsmol_videocall/manager/index"
+        />
+        <add id="BelSmol_VideoCall::menu_manager_history"
+             title="Call History"
+             translate="title"
+             module="BelSmol_VideoCall"
+             sortOrder="10"
+             parent="BelSmol_VideoCall::menu_manager"
+             resource="BelSmol_VideoCall::manager"
+             action="belsmol_videocall/history/index"
+        />
+    </menu>
+</config>

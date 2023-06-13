@@ -1,0 +1,18 @@
+<div class="video-row">
+    <video id="localVideo" playsinline="" autoplay="" muted=""></video>
+</div>
+
+<div class="video-row">
+    <h2 data-bind="i18n: 'Check media devices before making a call'"></h2>
+    <p data-bind="i18n: 'Warning! You will be able to continue the call only if your camera and microphone are available'"></p>
+
+    <div class="check-btn-wrapper">
+        <button id="checkMediaBtn"
+                data-bind="i18n: 'Check my camera and audio', click: checkMedia, visible: isCheckBtnVisible()"
+        ></button>
+        <button id="makeCallBtn"
+                data-bind="i18n: 'Call Support Team', click: initCall, visible: isJoinBtnVisible()"
+        ></button>
+    </div>
+    <div id="videoErrorMsg" data-bind="html: _errorMsg()"></div>
+</div>

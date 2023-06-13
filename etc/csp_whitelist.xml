@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <!--
+            Defines the sources that can be loaded using script interfaces.
+            By default, localhost added as default websocket server.
+            If you have a custom server, please extend this file in your modules.
+            DO NOT CHANGE THIS FILE DIRECTLY!
+        -->
+        <policy id="connect-src">
+            <values>
+                <value id="belsmol-videocall-src" type="host">https://webrtc.github.io</value>
+                <value id="belsmol-videocall-src-localhost" type="host">http://localhost</value>
+                <value id="belsmol-videocall-src-localhost2" type="host">https://localhost</value>
+                <value id="belsmol-videocall-src-localhost3" type="host">ws://localhost:8080</value>
+                <value id="belsmol-videocall-src-localhost4" type="host">ws://0.0.0.0:8080</value>
+                <value id="belsmol-videocall-src-localhost5" type="host">wss://localhost:8080</value>
+                <value id="belsmol-videocall-src-localhost6" type="host">wss://0.0.0.0:8080</value>
+            </values>
+        </policy>
+        <!--Defines the sources for JavaScript <script> elements.-->
+        <policy id="script-src">
+            <values>
+                <value id="belsmol-videocall-script-src-1" type="host">https://webrtc.github.io/adapter/adapter-latest.js</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

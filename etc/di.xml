@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--Service contracts-->
+    <preference for="BelSmol\VideoCall\Api\Data\ManagerInterface"
+                type="BelSmol\VideoCall\Model\Manager"
+    />
+    <preference for="BelSmol\VideoCall\Api\ManagerRepositoryInterface"
+                type="BelSmol\VideoCall\Model\Repository\ManagerRepository"
+    />
+    <preference for="BelSmol\VideoCall\Api\Data\ManagerSearchResultsInterface"
+                type="BelSmol\VideoCall\Model\Repository\ManagerSearchResults"
+    />
+    <preference for="BelSmol\VideoCall\Api\UrlInterface"
+                type="BelSmol\VideoCall\Model\Url"
+    />
+    <preference for="BelSmol\VideoCall\Api\AuthenticatorInterface"
+                type="BelSmol\VideoCall\Model\ManagerAuth\Authenticator"
+    />
+    <preference for="BelSmol\VideoCall\Api\AuthHandlerInterface"
+                type="BelSmol\VideoCall\Model\ManagerAuth\Handler"
+    />
+    <preference for="BelSmol\VideoCall\Api\AuthSessionInterface"
+                type="BelSmol\VideoCall\Model\ManagerAuth\Session"
+    />
+    <preference for="BelSmol\VideoCall\Api\PasswordServiceInterface"
+                type="BelSmol\VideoCall\Model\Service\PasswordService"
+    />
+    <preference for="BelSmol\VideoCall\Api\Data\EmailTemplateInterface"
+                type="BelSmol\VideoCall\Model\EmailTemplate"
+    />
+    <preference for="BelSmol\VideoCall\Api\EmailServiceInterface"
+                type="BelSmol\VideoCall\Model\Service\EmailService"
+    />
+    <preference for="BelSmol\VideoCall\Api\Data\CallHistoryInterface"
+                type="BelSmol\VideoCall\Model\CallHistory"
+    />
+    <preference for="BelSmol\VideoCall\Api\Data\CallHistorySearchResultsInterface"
+                type="BelSmol\VideoCall\Model\Repository\CallHistorySearchResults"
+    />
+    <preference for="BelSmol\VideoCall\Api\CallHistoryRepositoryInterface"
+                type="BelSmol\VideoCall\Model\Repository\CallHistoryRepository"
+    />
+    <preference for="BelSmol\VideoCall\Api\Data\SignalingServerMsgInterface"
+                type="BelSmol\VideoCall\Model\SignalingServer\ServerMsg"
+    />
+    <preference for="BelSmol\VideoCall\Api\TokenServiceInterface"
+                type="BelSmol\VideoCall\Model\Service\TokenService"
+    />
+    <preference for="BelSmol\VideoCall\Api\Data\CallRoomInterface"
+                type="BelSmol\VideoCall\Model\CallRoom"
+    />
+    <preference for="BelSmol\VideoCall\Api\CallRoomRepositoryInterface"
+                type="BelSmol\VideoCall\Model\Repository\CallRoomRepository"
+    />
+    <preference for="BelSmol\VideoCall\Api\Data\CallRoomSearchResultInterface"
+                type="BelSmol\VideoCall\Model\Repository\CallRoomSearchResult"
+    />
+    <preference for="BelSmol\VideoCall\Api\ProcessServiceInterface"
+                type="BelSmol\VideoCall\Model\Service\ProcessService"
+    />
+    <preference for="BelSmol\VideoCall\Api\SignalingServerLauncherInterface"
+                type="BelSmol\VideoCall\Model\SignalingServer\Launcher"
+    />
+    <preference for="BelSmol\VideoCall\Api\EmailTemplateRepositoryInterface"
+                type="BelSmol\VideoCall\Model\Repository\EmailTemplateRepository"
+    />
+    <preference for="BelSmol\VideoCall\Api\CallRoomOperatorInterface"
+                type="BelSmol\VideoCall\Model\Operator\CallRoomOperator"
+    />
+    <preference for="BelSmol\VideoCall\Api\CallHistoryOperatorInterface"
+                type="BelSmol\VideoCall\Model\Operator\CallHistoryOperator"
+    />
+    <preference for="BelSmol\VideoCall\Api\CustomerOperatorInterface"
+                type="BelSmol\VideoCall\Model\Operator\CustomerOperator"
+    />
+    <preference for="BelSmol\VideoCall\Api\ManagerOperatorInterface"
+                type="BelSmol\VideoCall\Model\Operator\ManagerOperator"
+    />
+    <!--END: Service contracts-->
+
+    <!--START: creating manager user session object-->
+    <!--Set namespace for manager session storage-->
+    <virtualType name="BelSmol\VideoCall\Model\ManagerSession\Storage" type="Magento\Framework\Session\Storage">
+        <arguments>
+            <argument name="namespace" xsi:type="string">belsmol_manager</argument>
+        </arguments>
+    </virtualType>
+    <!--
+        Set session storage to the Session model.
+        Handle user data, locales and so on
+    -->
+    <type name="BelSmol\VideoCall\Model\Session">
+        <arguments>
+            <argument name="storage" xsi:type="object">BelSmol\VideoCall\Model\ManagerSession\Storage</argument>
+        </arguments>
+    </type>
+    <!--END: creating manager session object-->
+
+    <!--Check if a user is allowed to see account pages or need to be logged in-->
+    <type name="BelSmol\VideoCall\Api\ManagerAccountControllerInterface">
+        <plugin name="belsmol_videocall_manager_account_plugin"
+                type="BelSmol\VideoCall\Plugin\Controller\ManagerAccountControllerPlugin" />
+    </type>
+
+    <!--Set allowed actions to plugin. List of actions that are allowed for not authorized manager users-->
+    <type name="BelSmol\VideoCall\Plugin\Controller\ManagerAccountControllerPlugin">
+        <arguments>
+            <argument name="allowedActions" xsi:type="array">
+                <item name="loginpost" xsi:type="string">loginpost</item>
+                <item name="resetpassword" xsi:type="string">resetpassword</item>
+                <item name="resetpasswordpost" xsi:type="string">resetpasswordpost</item>
+                <item name="forgotpassword" xsi:type="string">forgotpassword</item>
+                <item name="forgotpasswordpost" xsi:type="string">forgotpasswordpost</item>
+                <item name="login" xsi:type="string">login</item>
+                <item name="logout" xsi:type="string">logout</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!--Check if a customer is allowed to see support pages or need to be logged in or redirected-->
+    <type name="BelSmol\VideoCall\Api\CustomerSupportControllerInterface">
+        <plugin name="belsmol_videocall_manager_customer_account_plugin"
+                type="BelSmol\VideoCall\Plugin\Controller\CustomerSupportControllerPlugin" />
+    </type>
+
+    <!-- Create CLI Commands -->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="signalingServerStart" xsi:type="object">BelSmol\VideoCall\Console\Command\SignalingServerStart</item>
+                <item name="signalingServerStop" xsi:type="object">BelSmol\VideoCall\Console\Command\SignalingServerStop</item>
+                <item name="managerPassChange" xsi:type="object">BelSmol\VideoCall\Console\Command\ManagerPasswordChange</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!--Manager Admin Provider (UI component) -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="manager_list_data_source" xsi:type="string">ManagerListSearchResult</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="ManagerListSearchResult" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">belsmol_videocall_manager</argument>
+            <argument name="resourceModel" xsi:type="string">BelSmol\VideoCall\Model\ResourceModel\Manager</argument>
+        </arguments>
+    </virtualType>
+    <!--END: Manager Admin Provider (UI component) -->
+
+    <!--Call History Admin Provider (UI component) -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="history_list_data_source" xsi:type="string">HistoryListSearchResult</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="HistoryListSearchResult" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">belsmol_videocall_call_history</argument>
+            <argument name="resourceModel" xsi:type="string">BelSmol\VideoCall\Model\ResourceModel\CallHistory</argument>
+        </arguments>
+    </virtualType>
+    <!--END: Call History Admin Provider (UI component) -->
+</config>

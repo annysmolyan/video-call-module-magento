@@ -1,0 +1,72 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var Escaper $escaper
+ * @var ManagerLoginViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\ManagerLoginViewModel;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+$viewModel = $block->getViewModel();
+?>
+
+<form method="post"
+      action="<?= /* @escapeNotVerified */ $viewModel->getAuthUrl(); ?>"
+      id="login-form"
+      data-mage-init='{"validation": {}}'
+      autocomplete="off"
+>
+    <fieldset class="fieldset">
+    <h2>
+        <?= $escaper->escapeHtml(__('Welcome, please sign in')) ?>
+    </h2>
+    <br/>
+    <input name="form_key" type="hidden" value="<?= /* @escapeNotVerified */ $viewModel->getFormKey(); ?>"/>
+    <div class="manager-login-group field username required">
+        <label for="username">
+            <span><?= $escaper->escapeHtml(__('Login:')) ?></span>
+        </label>
+        <input id="username"
+               class="required-entry"
+               type="text"
+               name="login[login]"
+               autofocus
+               value=""
+               data-validate='{"required":true}'
+               autocomplete="off"
+        />
+    </div>
+    <div class="manager-login-group field password required">
+        <label for="login">
+            <span><?= $escaper->escapeHtml(__('Password:')) ?></span>
+        </label>
+        <input id="login"
+               class="required-entry"
+               type="password"
+               name="login[password]"
+               data-validate='{"required":true}'
+               value=""
+               autocomplete="off"
+        />
+    </div>
+    <div class="form-actions">
+        <div class="actions">
+            <button
+                <?php $block->getUiId(); ?>
+                    class="action-login action-primary">
+                <span><?= $escaper->escapeHtml(__('Sign in')) ?></span>
+            </button>
+        </div>
+    </div>
+    </fieldset>
+</form>

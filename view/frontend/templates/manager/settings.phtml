@@ -1,0 +1,68 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var Escaper $escaper
+ * @var ManagerSettingsViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\ManagerSettingsViewModel;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+?>
+
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Profile')" id="defaultOpen">
+        <?= $escaper->escapeHtml(__("Profile"))?>
+    </button>
+    <button class="tablinks" onclick="openTab(event, 'Security')">
+        <?= $escaper->escapeHtml(__("Security"))?>
+    </button>
+</div>
+
+<div id="Profile" class="tabcontent">
+    <?php
+        echo $block->getChildHtml("manager.settings.profile");
+    ?>
+</div>
+
+<div id="Security" class="tabcontent">
+    <?php
+        echo $block->getChildHtml("manager.settings.security");
+    ?>
+</div>
+
+<style>
+    * {box-sizing: border-box}
+</style>
+<script>
+    function openTab(evt, cityName) {
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the link that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>

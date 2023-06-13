@@ -1,0 +1,77 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var Escaper $escaper
+ * @var ManagerSettingsViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\ManagerSettingsViewModel;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+$viewModel = $block->getParentBlock()->getViewModel();
+$manager = $viewModel->getManager();
+?>
+
+
+<form method="post"
+      action="<?= $viewModel->getProfileActionForm(); ?>"
+      id="profileForm"
+      data-mage-init='{"validation": {}}'
+      autocomplete="off"
+>
+    <input type="hidden" name="form_key" value="<?php echo $block->getFormKey() ?>" />
+    <fieldset class="fieldset">
+        <h2><?= $escaper->escapeHtml(__("Profile Data")) ?></h2>
+        <br/>
+        <div class="manager-profile-group field firstname required">
+            <label for="firstname"><span><?= $escaper->escapeHtml(__("First Name:")) ?></span></label>
+            <input id="firstname"
+                   class="required-entry"
+                   type="text"
+                   name="firstname"
+                   autofocus
+                   value="<?= $escaper->escapeHtml($manager->getFirstName()); ?>"
+                   data-validate='{"required":true}'
+                   autocomplete="off"
+            />
+        </div>
+        <div class="manager-profile-group field middlename required">
+            <label for="middlename"><span><?= $escaper->escapeHtml(__("Middle Name:")) ?></span></label>
+            <input id="middlename"
+                   type="text"
+                   name="middlename"
+                   autofocus
+                   value="<?= $escaper->escapeHtml($manager->getMiddleName()); ?>"
+                   data-validate='{"required":false}'
+                   autocomplete="off"
+            />
+        </div>
+        <div class="manager-profile-group field lastname required">
+            <label for="lastname"><span><?= $escaper->escapeHtml(__("Last Name:")) ?></span></label>
+            <input id="lastname"
+                   type="text"
+                   name="lastname"
+                   autofocus
+                   value="<?= $escaper->escapeHtml($manager->getLastName()); ?>"
+                   data-validate='{"required":false}'
+                   autocomplete="off"
+            />
+        </div>
+        <div class="form-actions">
+            <div class="actions">
+                <button class="action-save action-primary">
+                    <span><?= $escaper->escapeHtml(__("Save")) ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>

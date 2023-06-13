@@ -1,0 +1,403 @@
+@color1: #efeefd;
+@color2: #ffffff;
+@color3: #fff;
+@color4: #777;
+@color5: #4b62e8;
+@color6: red;
+@color7: #222;
+
+// ------------ MANAGER LOGIN AREA START ------------ //
+.videocall-manager-login.page-layout-manager-login {
+
+        -webkit-align-items: center;
+        -ms-align-items: center;
+        align-items: center;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        background: @color1;
+        height: 101%;
+        max-height: 100%;
+        min-width: 50rem;
+
+        .page-wrapper {
+            -webkit-flex-grow: 0;
+            flex-grow: 0;
+            -webkit-flex-shrink: 0;
+            flex-shrink: 0;
+            background-color: @color2;
+            display: block;
+            float: none;
+            margin: auto;
+            max-width: 45rem;
+            min-height: 30rem;
+            min-width: 0;
+            padding: 40px 80px 50px;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            vertical-align: top;
+
+            >.form-actions {
+                margin-top: 2rem;
+                float: right;
+            }
+        }
+
+        >.manager-login-group {
+            margin: 10px 0 10px 0;
+            >label {
+                margin: 0 0 10px 0;
+                display: block;
+            }
+        }
+}
+// ------------  MANAGER LOGIN AREA END ------------ //
+
+// ------------  VideoCall AREA START ------------ //
+body.videocall-video-call #maincontent {
+    max-width: none;
+    padding: 0;
+
+    #timer {
+        text-align: center;
+        color: @color2;
+        display: flex;
+        justify-content: center;
+
+        >div {
+            float: left;
+            margin: 5px;
+        }
+    }
+
+    .join-msg {
+        animation: blinker 1s linear infinite;
+        text-align: center;
+        color: @color2;
+        font-weight: 800;
+        margin-top: 50px;
+    }
+
+    @keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .btn-box {
+        margin-top: 20px;
+        text-align: center;
+
+        svg#mute-audio.on, svg#mute-video.on, svg#sharescreen.on {
+            background: #0054ff;
+            border-radius: 48px;
+            box-shadow: 2px 2px 24px #444;
+
+            path.on {
+                display: block;
+            }
+        }
+
+        svg#mute-audio, svg#mute-video, svg#sharescreen {
+            path.on {
+                display: none;
+            }
+        }
+    }
+
+    #remoteVideo {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -100;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        background: @color7;
+        background-size: cover;
+    }
+
+    #localVideo {
+        width: 330px;
+        height: 230px;
+        bottom: 0;
+        position: fixed;
+        right: 0;
+        background: @color7;
+    }
+
+    #errorBar {
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: rgba(158,31,99,0.9);
+        color: @color3;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        right: 0;
+        top: 90px;
+    }
+
+    #mute-video circle, #mute-audio circle, #hangup circle, #sharescreen circle {
+        fill: @color4;
+        fill-opacity: 0.6;
+    }
+
+    #mute-video:hover circle, #mute-audio:hover circle, #sharescreen:hover circle {
+        fill: @color5;
+        fill-opacity: 0.6;
+    }
+
+    #hangup:hover circle {
+        fill: @color6;
+        fill-opacity: 0.6;
+    }
+}
+// ------------ VideoCall AREA END ------------ //
+
+// ------------ CHECK MEDIA START ------------ //
+body.videocall-customer-checkmedia {
+    .page-title-wrapper {
+        text-align: center;
+
+        .page-title {
+            margin-top: 15px;
+        }
+    }
+
+    video {
+        --width: 100%;
+        width: var(--width);
+        height: 437px;
+        /*height: calc(var(--width) * 0.75);*/
+        margin: 0 0 20px 0;
+        vertical-align: top;
+        background: @color7;
+    }
+
+    .warning-text-wrapper {
+        text-align: center;
+        margin: 10px 0 20px 0;
+    }
+
+    .video-wrapper {
+        clear: both;
+        width: 100%;
+        margin-top: 50px;
+
+        .video-row {
+            width: 47%;
+            float: left;
+            margin-left: 1.5%;
+            text-align: center;
+        }
+    }
+
+    .check-btn-wrapper{
+        margin-top: 30px;
+    }
+
+    #videoErrorMsg {
+        color: @color6;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .warning-msg {
+        text-align: center;
+    }
+
+    @media (max-width: 900px) {
+        .video-wrapper {
+            .video-row {
+                width: 100%;
+            }
+        }
+    }
+}
+// ------------ CHECK MEDIA END ------------ //
+
+
+// ------------ MANAGER ACCOUNT START ------------ //
+body.page-layout-manager-2columns-left{
+
+    div.updCall {
+        div#timer {
+            float: left;
+        }
+
+        button.forcedCallUpd {
+            display: block;
+            float: right;
+        }
+    }
+
+    div.no-calls {
+        clear:both;
+    }
+
+    #managerCallList {
+        margin-top: 10px;
+    }
+
+    /*DATA TABLE Css*/
+    #historyTable_filter{
+        input {
+            background: white;
+        }
+    }
+
+    #historyTable_length {
+        select {
+            background: white;
+        }
+    }
+
+    background: #f8f8fb;
+
+    header{
+        z-index: 999;
+    }
+
+    .page-title{
+        margin-top: 20px;
+    }
+
+    .customer-welcome {
+        .action.switch{
+            color: @color7;
+        }
+    }
+
+    .block-collapsible-nav {
+        .content {
+            background: #fafbfc;
+            box-shadow: 1px 0 0 0 #dac5c5;
+        }
+    }
+
+    .sidebar.sidebar-main {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #fafbfc;
+        overflow-x: hidden;
+        padding-top: 40px;
+        padding-right: 0px;
+        box-shadow: 2px 0 0 0 #dac5c5;
+        max-width: 300px;
+    }
+
+    .panel.header {
+        max-width: 100%;
+    }
+
+    .panel.wrapper{
+        background: white;
+        box-shadow: 0 1px 0 0 #dac5c5;
+        color: black;
+    }
+
+    #maincontent{
+        max-width: 1700px;
+    }
+
+    .column.main{
+        width: 79.16666667%;
+        float: right;
+        -ms-flex-order: 2;
+        -webkit-order: 2;
+        order: 2;
+    }
+
+    .sidebar-main{
+        width: 20.83333333%;
+        float: left;
+        -ms-flex-order: 1;
+        -webkit-order: 1;
+        order: 1;
+    }
+
+    /*----- SUPPORT_MANAGER_SETTINGS_PAGE -----*/
+    .videocall-manager-settings {
+        .tab {
+            float: left;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            width: 30%;
+            height: 300px;
+
+            > button {
+                display: block;
+                background-color: inherit;
+                color: black;
+                padding: 22px 16px;
+                width: 100%;
+                border: none;
+                outline: none;
+                text-align: left;
+                cursor: pointer;
+                transition: 0.3s;
+
+                &:hover {
+                    background-color: #ddd;
+                }
+            }
+
+            > button.active {
+                background-color: #ccc;
+            }
+
+            .tabcontent {
+                float: left;
+                padding: 0px 12px;
+                border: 1px solid #ccc;
+                width: 70%;
+                border-left: none;
+                height: 300px;
+            }
+            /*----- END: SUPPORT_MANAGER_SETTINGS_PAGE -----*/
+        }
+    }
+
+    @media (min-width: 30em) and (max-width: 50em) {
+        .column.main {
+            width: 77.7%;
+        }
+
+        .sidebar-main {
+            width: 22.3%;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .sidebar.sidebar-main {
+            display: contents;
+        }
+
+        .block-collapsible-nav {
+            top: 0px;
+        }
+
+        .title.block-collapsible-nav-title {
+            border: none;
+            &:after {
+                font-size: 18px;
+                content: '☰';
+                margin: 0;
+            }
+        }
+    }
+}
+
+// ------------ MANAGER ACCOUNT END ------------ //
+

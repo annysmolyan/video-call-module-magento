@@ -1,0 +1,35 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var CustomerHelpViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\CustomerHelpViewModel;
+use Magento\Framework\View\Element\Template;
+
+$viewModel = $block->getViewModel();
+?>
+
+<div class="warning-msg">
+    <p>
+        <?= __(
+            "Need help? Let's make a video call! Our system will connect you to the first available manager.
+            Didn't receive an answer or there is no manager available? Please contact us %1%2%3.
+            Mind that video calls allowed only if you have audio and camera available.",
+            '<a href="mailto:' .  /* @escapeNotVerified */ $viewModel->getSupportEmail() . '">',
+            /* @escapeNotVerified */ $viewModel->getSupportEmail(),
+            '</a>'
+        )?>
+    </p>
+    <a href="<?=  /* @escapeNotVerified */ $viewModel->getCheckMediaUrl(); ?>" target="_blank" class="action primary">
+        <?= __("Call Support Team")?>
+    </a>
+</div>

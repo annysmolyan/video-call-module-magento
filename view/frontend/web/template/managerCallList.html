@@ -1,0 +1,32 @@
+<div class="updCall">
+    <div id="timer"></div>
+    <button class="forcedCallUpd" data-bind="i18n: 'Forced Update', click: _loadCallList"></button>
+</div>
+
+
+<!-- ko if: _callList().length > 0-->
+<table id="historyTable">
+    <thead>
+    <tr>
+        <th data-bind="i18n: 'Order'"></th>
+        <th data-bind="i18n: 'Customer'"></th>
+        <th data-bind="i18n: 'Email'"></th>
+        <th data-bind="i18n: 'Action'"></th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach: _callList">
+        <tr>
+            <td data-bind="text: id"></td>
+            <td data-bind="text: customer"></td>
+            <td data-bind="text: customerEmail"></td>
+            <td>
+                <a target="_blank" data-bind="attr:{href: url}, i18n: 'Join'"></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- /ko -->
+
+<!-- ko if: _callList().length < 1 -->
+<div class="no-calls" data-bind="i18n: 'No active calls at the moment'"></div>
+<!-- /ko -->

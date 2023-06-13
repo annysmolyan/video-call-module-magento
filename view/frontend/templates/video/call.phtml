@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var VideoCallViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\VideoCallViewModel;
+use Magento\Framework\View\Element\Template;
+
+$viewModel = $block->getViewModel();
+
+?>
+
+<div class="video-wrapper" id="videoCall" data-bind="scope:'videoCall'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+    {
+        "#videoCall": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "videoCall": {
+                        "component": "BelSmol_VideoCall/js/components/videoCall",
+                        "signalingServer": "<?= /* @escapeNotVerified */ $viewModel->getSignalingServerAddress(); ?>",
+                        "iceServers": <?= /* @escapeNotVerified */ $viewModel->getIceServers(); ?>
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</div>
+
+<script>
+    require.config({
+        paths: {
+            webrtcAdapter: '<?= /* @escapeNotVerified */ $viewModel->getWebrtcAdapter(); ?>' //MUST BE removed ".js" !!!
+        }
+    });
+</script>

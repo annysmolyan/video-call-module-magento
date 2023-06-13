@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">history_list.history_list_data_source</item>
+        </item>
+        <item name="buttons" xsi:type="array">
+            <item name="truncate" xsi:type="string">BelSmol\VideoCall\Block\Adminhtml\CallHistory\Button\TruncateButton</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>history_list_columns</spinner>
+        <deps>
+            <dep>history_list.history_list_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="history_list_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>BelSmol_VideoCall::manager</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="history_list_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+        <exportButton name="export_button"/>
+    </listingToolbar>
+    <columns name="history_list_columns">
+        <!--Column List Area-->
+        <column name="entity_id" sortOrder="10">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="manager_id" sortOrder="20">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Manager ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="manager_firstname" sortOrder="30">
+            <settings>
+                <label translate="true">Manager First Name</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="manager_lastname" sortOrder="40">
+            <settings>
+                <label translate="true">Manager Last Name</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="customer_id" sortOrder="50">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Customer ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="customer_firstname" sortOrder="60">
+            <settings>
+                <label translate="true">Customer First Name</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="customer_lastname" sortOrder="70">
+            <settings>
+                <label translate="true">Customer Last Name</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="customer_email" sortOrder="80">
+            <settings>
+                <label translate="true">Customer Email</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="duration" class="BelSmol\VideoCall\Ui\Component\Listing\Column\Duration" sortOrder="90">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Duration</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="100">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <dateFormat>yyyy-MM-dd</dateFormat>
+                <label translate="true">Date</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

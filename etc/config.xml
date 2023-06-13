@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <videocall>
+            <general>
+                <enabled>0</enabled>
+            </general>
+            <security>
+                <session_lifetime>28800</session_lifetime>
+            </security>
+            <webrtc>
+                <adapter>https://webrtc.github.io/adapter/adapter-latest</adapter>
+                <signaling_schedule>*/5 * * * *</signaling_schedule>
+            </webrtc>
+            <server>
+                <address>turn:0.0.0.0:3478</address>
+            </server>
+            <email>
+                <email_from>my@magento.com</email_from>
+                <name_from>My Magento Site</name_from>
+            </email>
+            <customer_account>
+                <support_email>example@support.com</support_email>
+            </customer_account>
+        </videocall>
+    </default>
+</config>

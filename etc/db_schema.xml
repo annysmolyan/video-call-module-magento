@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- Manager data main table-->
+    <table name="belsmol_videocall_manager" resource="default" engine="innodb" comment="Manager Table">
+        <column xsi:type="int" name="entity_id" padding="6" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="firstname" nullable="false" length="255" comment="First Name"/>
+        <column xsi:type="varchar" name="middlename" nullable="true" length="255" comment="Middle Name/Initial"/>
+        <column xsi:type="varchar" name="lastname" nullable="true" length="255" comment="Last Name"/>
+        <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Email"/>
+        <column xsi:type="varchar" name="login" nullable="false" length="255" comment="Login"/>
+        <column xsi:type="varchar" name="token" nullable="false" length="255" comment="Token"/>
+        <column xsi:type="varchar" name="password_hash" nullable="true" length="128" comment="Password_hash"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" identity="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="BELSMOL_VIDEOCALL_MANAGER_LOGIN">
+            <column name="login"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="BELSMOL_VIDEOCALL_MANAGER_EMAIL">
+            <column name="email"/>
+        </constraint>
+    </table>
+
+    <!-- Manager website relation table -->
+    <table name="belsmol_videocall_manager_website" resource="default" engine="innodb" comment="Manager Websites Table">
+        <column xsi:type="int" name="manager_id" unsigned="true" nullable="false" identity="false" comment="Manager ID"/>
+        <column xsi:type="smallint" name="website_id" unsigned="true" nullable="false" identity="false" comment="Website ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="manager_id"/>
+            <column name="website_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="BELSMOL_VIDEOCALL_MANAGER_WEBSITE_MANAGER_ID_BELSMOL_VIDEOCALL_MANAGER_ENTITY_ID"
+                    table="belsmol_videocall_manager_website"
+                    column="manager_id"
+                    referenceTable="belsmol_videocall_manager"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"
+        />
+        <constraint xsi:type="foreign"
+                    referenceId="BELSMOL_VIDEOCALL_MANAGER_WEBSITE_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID"
+                    table="belsmol_videocall_manager_website"
+                    column="website_id"
+                    referenceTable="store_website"
+                    referenceColumn="website_id"
+                    onDelete="CASCADE"
+        />
+        <index referenceId="BELSMOL_VIDEOCALL_MANAGER_WEBSITE_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID" indexType="btree">
+            <column name="website_id"/>
+        </index>
+    </table>
+
+    <!-- Video call active rooms table -->
+    <table name="belsmol_videocall_call_room" resource="default" engine="innodb" comment="Video Call Rooms Table">
+        <column xsi:type="int" name="entity_id" padding="6" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="room_id" nullable="true" length="255" comment="Room Id"/>
+        <column xsi:type="int" name="manager_id" unsigned="true" nullable="true" identity="false" comment="Manager ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" identity="false" comment="Customer ID"/>
+        <column xsi:type="smallint" name="website_id" unsigned="true" nullable="false" identity="false" comment="Website ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="BELSMOL_VIDEOCALL_CALL_ROOM_MANAGER_ID_BELSMOL_VIDEOCALL_MANAGER_ENTITY_ID"
+                    table="belsmol_videocall_call_room"
+                    column="manager_id"
+                    referenceTable="belsmol_videocall_manager"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"
+        />
+        <constraint xsi:type="foreign"
+                    referenceId="BELSMOL_VIDEOCALL_CALL_ROOM_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="belsmol_videocall_call_room"
+                    column="customer_id"
+                    referenceTable="customer_entity"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"
+        />
+        <constraint xsi:type="foreign"
+                    referenceId="BELSMOL_VIDEOCALL_CALL_ROOM_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID"
+                    table="belsmol_videocall_call_room"
+                    column="website_id"
+                    referenceTable="store_website"
+                    referenceColumn="website_id"
+                    onDelete="CASCADE"
+        />
+    </table>
+
+    <!-- Video call history table -->
+    <table name="belsmol_videocall_call_history" resource="default" engine="innodb" comment="Video Call History Tables">
+        <column xsi:type="int" name="entity_id" padding="6" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="manager_id" unsigned="true" nullable="false" identity="false" comment="Manager ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" identity="false" comment="Customer ID"/>
+        <column xsi:type="int" name="duration" unsigned="true" nullable="false" identity="false" comment="Duration in sec"/>
+        <column xsi:type="timestamp" name="date" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Date"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="BELSMOL_VIDEOCALL_CALL_HISTORY_MANAGER_ID_BELSMOL_VIDEOCALL_MANAGER_ENTITY_ID"
+                    table="belsmol_videocall_call_history"
+                    column="manager_id"
+                    referenceTable="belsmol_videocall_manager"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"
+        />
+        <constraint xsi:type="foreign"
+                    referenceId="BELSMOL_VIDEOCALLCALL_HISTORY_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="belsmol_videocall_call_history"
+                    column="customer_id"
+                    referenceTable="customer_entity"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"
+        />
+        <index referenceId="BELSMOL_VIDEOCALL_CALL_HISTORY_INDEX" indexType="btree">
+            <column name="manager_id"/>
+        </index>
+    </table>
+</schema>

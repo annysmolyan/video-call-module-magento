@@ -1,0 +1,68 @@
+{
+    "belsmol_videocall_manager": {
+        "column": {
+            "entity_id": true,
+            "firstname": true,
+            "middlename": true,
+            "lastname": true,
+            "email": true,
+            "login": true,
+            "token": true,
+            "password_hash": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "BELSMOL_VIDEOCALL_MANAGER_LOGIN": true,
+            "BELSMOL_VIDEOCALL_MANAGER_EMAIL": true
+        }
+    },
+    "belsmol_videocall_manager_website": {
+        "column": {
+            "manager_id": true,
+            "website_id": true
+        },
+        "index": {
+            "BELSMOL_VIDEOCALL_MANAGER_WEBSITE_WEBSITE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_5E73A42EC277E7B3973AAFADD6B30801": true,
+            "BELSMOL_VIDEOCALL_MANAGER_WS_WS_ID_STORE_WS_WS_ID": true
+        }
+    },
+    "belsmol_videocall_call_room": {
+        "column": {
+            "entity_id": true,
+            "room_id": true,
+            "manager_id": true,
+            "customer_id": true,
+            "website_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_B8CAE0A84A8D1813DD044806B45ADE34": true,
+            "BELSMOL_VIDEOCALL_CALL_ROOM_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
+            "BELSMOL_VIDEOCALL_CALL_ROOM_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID": true
+        }
+    },
+    "belsmol_videocall_call_history": {
+        "column": {
+            "entity_id": true,
+            "manager_id": true,
+            "customer_id": true,
+            "duration": true,
+            "date": true
+        },
+        "index": {
+            "BELSMOL_VIDEOCALL_CALL_HISTORY_MANAGER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_48F870B62EAB55DFE3D8E41C8E5D8C94": true,
+            "BELSMOL_VIDEOCALL_CALL_HISTORY_CSTR_ID_CSTR_ENTT_ENTT_ID": true
+        }
+    }
+}

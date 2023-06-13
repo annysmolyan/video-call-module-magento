@@ -1,0 +1,52 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var ManagerCallHistoryViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\ManagerCallHistoryViewModel;
+use Magento\Framework\View\Element\Template;
+
+$viewModel = $block->getViewModel();
+$history = $viewModel->getManagerHistory();
+?>
+
+<table id="historyTable" class="display">
+    <thead>
+        <tr>
+            <th><?= __("Customer Name") ?></th>
+            <th><?= __("Customer Email") ?></th>
+            <th><?= __("Duration") ?></th>
+            <th><?= __("Date") ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($history as $row): ?>
+            <tr>
+                <td><?=  /* @escapeNotVerified */ $row->getCustomer()->getFirstname(); ?></td>
+                <td><?=  /* @escapeNotVerified */ $row->getCustomer()->getEmail(); ?></td>
+                <td><?=  /* @escapeNotVerified */ $viewModel->formatDuration($row->getDuration()); ?></td>
+                <td><?=  /* @escapeNotVerified */ $viewModel->formatDateFromString($row->getDate()); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "BelSmol_VideoCall/js/components/datatable":
+                {
+                    "tableId":"historyTable"
+                }
+        }
+    }
+</script>

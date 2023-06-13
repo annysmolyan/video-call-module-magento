@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="manager-login" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="manager-login" />
+    <body>
+        <referenceContainer name="after.body.start">
+            <!--Include magento libraries like validators, cookie and so on-->
+            <block class="Magento\RequireJs\Block\Html\Head\Config"
+                   name="requirejs-config"
+            />
+            <block class="Magento\Framework\View\Element\Js\Cookie" name="js_cookies" template="Magento_Theme::js/cookie.phtml">
+    		<arguments>
+        		<argument name="session_config" xsi:type="object">Magento\Theme\ViewModel\Block\SessionConfig</argument>
+    		</arguments>
+	    </block>
+            <block class="Magento\Theme\Block\Html\Notices"
+                   name="global_notices"
+                   template="Magento_Theme::html/notices.phtml"
+            />
+            <!--END: Include magento libraries-->
+        </referenceContainer>
+
+        <referenceContainer name="login.header">
+            <!--  Display session messages -->
+            <container name="page.messages" htmlTag="div" htmlClass="page messages">
+                <block class="Magento\Framework\View\Element\Template"
+                       name="ajax.message.placeholder"
+                       template="Magento_Theme::html/messages.phtml"
+                />
+                <block class="Magento\Framework\View\Element\Messages"
+                       name="messages" as="messages"
+                       template="Magento_Theme::messages.phtml"
+                />
+            </container>
+        </referenceContainer>
+
+        <referenceContainer name="login.content">
+            <!--
+                Display manager login form. Don't remove cacheable="false".
+                Because login page is saved in cache and logged in user can open
+                the login page instead of being redirected to Dashboard page
+            -->
+            <block name="manager.login" cacheable="false" template="BelSmol_VideoCall::manager/login.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">BelSmol\VideoCall\ViewModel\ManagerLoginViewModel</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

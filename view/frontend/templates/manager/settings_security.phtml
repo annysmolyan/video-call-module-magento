@@ -1,0 +1,77 @@
+<?php
+/**
+ * Copyright (c) 2023 by https://github.com/annysmolyan
+ *
+ * This module provides video call functionality for an e-commerce store.
+ * For license details, please view the GNU General Public License v3 (GPL 3.0)
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
+
+/**
+ * @var Template $block
+ * @var Escaper $escaper
+ * @var ManagerSettingsViewModel $viewModel
+ */
+
+use BelSmol\VideoCall\ViewModel\ManagerSettingsViewModel;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+$viewModel = $block->getParentBlock()->getViewModel();
+?>
+
+<form method="post"
+      action="<?= $viewModel->getSecurityActionForm(); ?>"
+      id="securityForm"
+      data-mage-init='{"validation": {}}'
+      autocomplete="off"
+>
+    <input type="hidden" name="form_key" value="<?php echo $block->getFormKey() ?>" />
+    <fieldset class="fieldset">
+        <h2><?= $escaper->escapeHtml(__("Change My Password")) ?></h2>
+        <br/>
+        <div class="manager-settings-group field currentPassword required">
+            <label for="currentPassword"><span><?= $escaper->escapeHtml(__("Current Password:")) ?></span></label>
+            <input id="currentPassword"
+                   class="required-entry"
+                   type="password"
+                   name="currentPassword"
+                   autofocus
+                   value=""
+                   data-validate='{"required":true}'
+                   autocomplete="off"
+            />
+        </div>
+        <div class="manager-settings-group field newPassword required">
+            <label for="newPassword"><span><?= $escaper->escapeHtml(__("New Password:")) ?></span></label>
+            <input id="newPassword"
+                   class="required-entry validate-length maximum-length-20 minimum-length-6"
+                   type="password"
+                   name="newPassword"
+                   autofocus
+                   value=""
+                   data-validate='{"required":true}'
+                   autocomplete="off"
+            />
+        </div>
+        <div class="manager-settings-group field passwordConfirm required">
+            <label for="passwordConfirm"><span><?= $escaper->escapeHtml(__("Confirm Password:")) ?></span></label>
+            <input id="passwordConfirm"
+                   class="required-entry"
+                   type="password"
+                   name="passwordConfirm"
+                   autofocus
+                   value=""
+                   data-validate='{"required":true, "equalTo": "#newPassword"}'
+                   autocomplete="off"
+            />
+        </div>
+        <div class="form-actions">
+            <div class="actions">
+                <button class="action-save action-primary">
+                    <span><?= $escaper->escapeHtml(__("Save")) ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
